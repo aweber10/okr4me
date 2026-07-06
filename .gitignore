@@ -1,4 +1,6 @@
 referenz/
+node_modules/
+dist/
 
 # Tauri
 /src-tauri/target/
