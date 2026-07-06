@@ -1,0 +1,6 @@
+referenz/
+
+# Tauri
+/src-tauri/target/
+/src-tauri/.cargo/
+/src-tauri/bundle/
