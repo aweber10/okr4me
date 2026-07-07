@@ -33,10 +33,35 @@ export const keyResultSchema = z.object({
   startValue: z.number(),
   targetValue: z.number(),
   currentValue: z.number(),
-  stepSize: z.number().positive(),
-  weight: z.number().positive(),
+  stepSize: z.number().min(0.01),
+  weight: z.number().int().min(1),
   resultType: z.string().max(20)
+}).superRefine((value, context) => {
+  const range = Math.abs(value.targetValue - value.startValue);
+  const minValue = Math.min(value.startValue, value.targetValue);
+  const maxValue = Math.max(value.startValue, value.targetValue);
+
+  if (range === 0) {
+    context.addIssue({ code: z.ZodIssueCode.custom, path: ["targetValue"], message: "Startwert und Zielwert dürfen nicht identisch sein." });
+  }
+  if (value.stepSize > range) {
+    context.addIssue({ code: z.ZodIssueCode.custom, path: ["stepSize"], message: "Schrittgröße darf nicht größer als der Wertebereich sein." });
+  }
+  if (range > 0 && !dividesRange(range, value.stepSize)) {
+    context.addIssue({ code: z.ZodIssueCode.custom, path: ["stepSize"], message: "Schrittgröße teilt den Wertebereich nicht ganzzahlig." });
+  }
+  if (value.currentValue < minValue || value.currentValue > maxValue) {
+    context.addIssue({ code: z.ZodIssueCode.custom, path: ["currentValue"], message: "Aktueller Wert muss zwischen Startwert und Zielwert liegen." });
+  }
 });
+
+export function dividesRange(range: number, stepSize: number): boolean {
+  if (stepSize <= 0) return false;
+  const precision = 1_000_000;
+  const scaledRange = Math.round(range * precision);
+  const scaledStep = Math.round(stepSize * precision);
+  return scaledStep > 0 && scaledRange % scaledStep === 0;
+}
 
 export const commentSchema = z.object({
   text: z.string().trim().min(1).max(2000)

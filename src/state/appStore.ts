@@ -37,7 +37,7 @@ interface AppState {
   updateCurrentParticipant: (patch: Partial<Participant>) => Promise<void>;
   setSyncFolder: (folder: string | null) => Promise<void>;
   pullSync: () => Promise<void>;
-  createOrgUnit: (input: Omit<OrgUnit, "id">) => Promise<void>;
+  createOrgUnit: (input: Omit<OrgUnit, "id">) => Promise<string>;
   updateOrgUnit: (id: string, input: Partial<OrgUnit>) => Promise<void>;
   deleteOrgUnit: (id: string) => Promise<void>;
   selectOrgUnit: (id?: string) => void;
@@ -45,6 +45,7 @@ interface AppState {
   updateObjective: (id: string, patch: Partial<Objective>) => Promise<void>;
   deleteObjective: (id: string) => Promise<void>;
   createKeyResult: (objectiveId: string, input: { description: string; startValue: number; targetValue: number; currentValue: number; stepSize: number; weight: number; resultType: string }) => Promise<void>;
+  updateKeyResult: (keyResultId: string, patch: { description?: string; startValue?: number; targetValue?: number; currentValue?: number; stepSize?: number; weight?: number; resultType?: string }) => Promise<void>;
   updateKeyResultValue: (keyResultId: string, value: number) => Promise<void>;
   deleteKeyResult: (keyResultId: string) => Promise<void>;
   toggleCrossLink: (objectiveId: string, keyResultId: string) => Promise<void>;
@@ -109,7 +110,12 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   createOrgUnit: async (input) => {
     const participantId = requireParticipant(get());
-    await get().persist(createOrgUnit(get().document, participantId, input));
+    const next = createOrgUnit(get().document, participantId, input);
+    const id = Object.keys(next.orgUnits).find((unitId) => !get().document.orgUnits[unitId]);
+    await get().persist(next);
+    if (!id) throw new Error("Created org unit could not be resolved.");
+    set({ selectedOrgUnitId: id });
+    return id;
   },
 
   updateOrgUnit: async (id, input) => {
@@ -141,6 +147,11 @@ export const useAppStore = create<AppState>((set, get) => ({
   createKeyResult: async (objectiveId, input) => {
     const participantId = requireParticipant(get());
     await get().persist(createKeyResult(get().document, participantId, objectiveId, input));
+  },
+
+  updateKeyResult: async (keyResultId, patch) => {
+    const participantId = requireParticipant(get());
+    await get().persist(updateKeyResult(get().document, participantId, keyResultId, patch));
   },
 
   updateKeyResultValue: async (keyResultId, value) => {

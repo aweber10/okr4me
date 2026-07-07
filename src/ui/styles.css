@@ -64,7 +64,8 @@ body {
 .quarter-control,
 .button-row,
 .inline-form,
-.create-objective {
+.create-objective,
+.compact-row {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -72,7 +73,7 @@ body {
 
 .workspace {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 300px minmax(0, 1fr);
   min-height: calc(100vh - 76px);
 }
 
@@ -80,10 +81,34 @@ body {
   padding: 18px;
   border-right: 1px solid #d7dce2;
   background: #fbfcfd;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .content {
   padding: 22px;
+  min-width: 0;
+}
+
+.panel,
+.panel form,
+.panel label,
+.panel .fui-Input,
+.panel .fui-Dropdown,
+.panel .fui-Textarea,
+.org-tree,
+.org-tree form,
+.org-tree .fui-Input,
+.org-tree .fui-Button {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.panel .fui-Input,
+.panel .fui-Dropdown,
+.panel .fui-Textarea,
+.org-tree .fui-Input {
+  width: 100%;
 }
 
 .avatar {
@@ -130,8 +155,10 @@ p {
 }
 
 .create-objective > span:first-child,
-.inline-form > span:first-child {
+.inline-form > span:first-child,
+.compact-row > span:first-child {
   flex: 1;
+  min-width: 0;
 }
 
 .objective-list {
@@ -157,6 +184,12 @@ p {
   gap: 14px;
 }
 
+.objective-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .objective-header p,
 .kr-row span {
   margin: 4px 0 0;
@@ -170,25 +203,215 @@ p {
 }
 
 .kr-row {
-  grid-template-columns: minmax(180px, 1fr) minmax(160px, 280px) auto;
+  grid-template-columns: minmax(220px, 1fr) minmax(160px, 280px) auto;
   padding: 10px;
   background: #f6f7f9;
   border-radius: 6px;
 }
 
+.kr-row.editing {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.kr-row.editing > input[type="range"],
+.kr-row.editing > .kr-actions {
+  display: none;
+}
+
+.kr-main {
+  min-width: 0;
+}
+
+.cross-link-badge {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+  margin-top: 6px !important;
+  border: 1px solid #c19c00;
+  border-radius: 999px;
+  padding: 2px 7px;
+  background: #fff8dc;
+  color: #4f3b00 !important;
+  font-size: 12px;
+}
+
+.kr-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.editable-title,
+.title-edit-form {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.editable-title h3,
+.editable-title strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.editable-title.compact {
+  align-items: flex-start;
+}
+
+.title-edit-form > span:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.key-result-create-form,
+.key-result-details-form {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.key-result-create-form {
+  grid-template-columns: minmax(220px, 1fr) auto auto auto;
+  align-items: start;
+}
+
+.key-result-create-form.expanded {
+  grid-template-columns: minmax(220px, 1fr) auto auto auto;
+}
+
+.key-result-create-form > span:first-child {
+  min-width: 0;
+}
+
+.key-result-details-grid,
+.key-result-details-form {
+  grid-template-columns: repeat(5, minmax(96px, 1fr));
+}
+
+.key-result-details-grid {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  grid-column: 1 / -1;
+}
+
+.key-result-details-grid label,
+.key-result-details-form label {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  font-size: 12px;
+  color: #4d5663;
+}
+
+.key-result-details-grid .fui-Input,
+.key-result-details-form .fui-Input {
+  width: 100%;
+  min-width: 0;
+}
+
+.key-result-details-form .form-error,
+.key-result-details-form .button-row {
+  grid-column: 1 / -1;
+}
+
+.form-error {
+  grid-column: 1 / -1;
+  color: #b10e1c;
+  font-size: 13px;
+}
+
+.cross-link-manager {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) minmax(260px, 1.2fr);
+  gap: 14px;
+  border: 1px solid #d7dce2;
+  border-radius: 6px;
+  background: #fbfcfd;
+  padding: 12px;
+  min-width: 0;
+}
+
+.cross-link-column {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.cross-link-column h4 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.cross-link-row,
+.cross-link-candidate {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  border: 1px solid #d7dce2;
+  border-radius: 6px;
+  background: #fff;
+  padding: 8px 10px;
+  text-align: left;
+  min-width: 0;
+}
+
+.cross-link-candidate {
+  grid-template-columns: minmax(0, 1fr);
+  cursor: pointer;
+}
+
+.cross-link-candidate:hover {
+  border-color: #0f6cbd;
+  background: #f7fbff;
+}
+
+.cross-link-row strong,
+.cross-link-candidate strong,
+.cross-link-row span,
+.cross-link-candidate span {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.cross-link-row span,
+.cross-link-candidate span {
+  margin-top: 3px;
+  color: #5d6673;
+  font-size: 13px;
+}
+
 .org-layout {
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 18px;
+  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
 }
 
 .org-tree {
   display: grid;
   align-content: start;
-  gap: 8px;
+  gap: 14px;
+  min-width: 0;
+}
+
+.tree-list {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
 }
 
 .tree-node {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: center;
+  gap: 6px;
   border: 1px solid #d7dce2;
   border-left: 6px solid #0f6cbd;
   border-radius: 6px;
@@ -196,10 +419,75 @@ p {
   padding: 10px 12px;
   text-align: left;
   cursor: pointer;
+  min-height: 44px;
 }
 
 .tree-node.active {
   outline: 2px solid #0f6cbd;
+}
+
+.tree-toggle {
+  display: grid;
+  place-items: center;
+  color: #4d5663;
+}
+
+.tree-spacer {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.tree-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tree-children {
+  display: grid;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.org-actions,
+.stack-form {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.org-actions {
+  border-top: 1px solid #d7dce2;
+  padding-top: 14px;
+}
+
+.inline-warning {
+  padding: 8px 10px;
+  border-left: 3px solid #c19c00;
+  background: #fff8dc;
+  color: #4f3b00;
+}
+
+.edit-unit-form {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) 72px minmax(260px, 1.4fr) auto auto;
+  gap: 10px;
+  align-items: start;
+  margin-bottom: 18px;
+}
+
+.color-input {
+  width: 72px;
+  height: 32px;
+  border: 1px solid #d1d1d1;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.org-objective-form {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto;
 }
 
 .graph-surface {
@@ -270,6 +558,12 @@ p {
   .quarter-control,
   .nav {
     flex-wrap: wrap;
+  }
+
+  .edit-unit-form,
+  .org-objective-form,
+  .cross-link-manager {
+    grid-template-columns: 1fr;
   }
 }
 

@@ -2,6 +2,19 @@ import { FormEvent, useMemo, useState } from "react";
 import { Button, Dropdown, Input, Label, Option, Textarea } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 import { useAppStore } from "../state/appStore";
+import type { OrgUnit } from "../domain/types";
+
+function orgPath(units: OrgUnit[], unitId?: string): string {
+  if (!unitId) return "";
+  const byId = new Map(units.map((unit) => [unit.id, unit]));
+  const parts: string[] = [];
+  let current = byId.get(unitId);
+  while (current) {
+    parts.unshift(current.name);
+    current = current.parentId ? byId.get(current.parentId) : undefined;
+  }
+  return parts.join(" / ");
+}
 
 export function ProfilePanel() {
   const { t } = useTranslation();
@@ -26,29 +39,30 @@ export function ProfilePanel() {
     <section className="panel">
       <h2>{t("profile")}</h2>
       <div className="avatar">{participant.displayName.slice(0, 2).toUpperCase()}</div>
-      <Label>{t("displayName")}</Label>
-      <Input value={participant.displayName} onChange={(_, data) => void updateCurrentParticipant({ displayName: data.value })} />
-      <Label>Sprache / Language</Label>
-      <Dropdown selectedOptions={[participant.language]} value={participant.language.toUpperCase()} onOptionSelect={(_, data) => void updateCurrentParticipant({ language: data.optionValue as "de" | "en" })}>
+      <Label htmlFor="profile-display-name">{t("displayName")}</Label>
+      <Input id="profile-display-name" value={participant.displayName} onChange={(_, data) => void updateCurrentParticipant({ displayName: data.value })} />
+      <Label htmlFor="profile-language">Sprache / Language</Label>
+      <Dropdown id="profile-language" selectedOptions={[participant.language]} value={participant.language.toUpperCase()} onOptionSelect={(_, data) => void updateCurrentParticipant({ language: data.optionValue as "de" | "en" })}>
         <Option value="de">Deutsch</Option>
         <Option value="en">English</Option>
       </Dropdown>
-      <Label>Organisation</Label>
+      <Label htmlFor="profile-organization">Organisation</Label>
       <Dropdown
+        id="profile-organization"
         selectedOptions={participant.orgUnitId ? [participant.orgUnitId] : []}
-        value={orgUnits.find((unit) => unit.id === participant.orgUnitId)?.name ?? ""}
+        value={orgPath(orgUnits, participant.orgUnitId)}
         onOptionSelect={(_, data) => void updateCurrentParticipant({ orgUnitId: data.optionValue })}
       >
-        {orgUnits.map((unit) => <Option key={unit.id} value={unit.id}>{unit.name}</Option>)}
+        {orgUnits.map((unit) => <Option key={unit.id} value={unit.id}>{orgPath(orgUnits, unit.id)}</Option>)}
       </Dropdown>
-      <Label>Tätigkeit</Label>
-      <Textarea value={participant.roleDescription} maxLength={255} onChange={(_, data) => void updateCurrentParticipant({ roleDescription: data.value })} />
-      <Label>Über mich</Label>
-      <Textarea value={participant.about} maxLength={255} onChange={(_, data) => void updateCurrentParticipant({ about: data.value })} />
+      <Label htmlFor="profile-role">Tätigkeit</Label>
+      <Textarea id="profile-role" value={participant.roleDescription} maxLength={255} onChange={(_, data) => void updateCurrentParticipant({ roleDescription: data.value })} />
+      <Label htmlFor="profile-about">Über mich</Label>
+      <Textarea id="profile-about" value={participant.about} maxLength={255} onChange={(_, data) => void updateCurrentParticipant({ about: data.value })} />
 
       <form className="sync-form" onSubmit={(event) => void submit(event)}>
-        <Label>{t("syncFolder")}</Label>
-        <Input value={folder} onChange={(_, data) => setFolder(data.value)} placeholder="/gemeinsamer/ordner" />
+        <Label htmlFor="profile-sync-folder">{t("syncFolder")}</Label>
+        <Input id="profile-sync-folder" value={folder} onChange={(_, data) => setFolder(data.value)} placeholder="/gemeinsamer/ordner" />
         <div className="button-row">
           <Button type="submit">{t("save")}</Button>
           <Button type="button" onClick={() => void pullSync()}>Pull</Button>
