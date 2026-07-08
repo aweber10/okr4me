@@ -1,4 +1,4 @@
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { Button, Dropdown, Input, Label, Option, Textarea } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 import { useAppStore } from "../state/appStore";
@@ -27,12 +27,36 @@ export function ProfilePanel() {
   const setSyncFolder = useAppStore((state) => state.setSyncFolder);
   const pullSync = useAppStore((state) => state.pullSync);
   const [folder, setFolder] = useState(syncFolder ?? "");
+  const [syncStatus, setSyncStatus] = useState("");
+  const [syncError, setSyncError] = useState("");
+
+  useEffect(() => {
+    setFolder(syncFolder ?? "");
+  }, [syncFolder]);
 
   if (!participant) return null;
 
   async function submit(event: FormEvent) {
     event.preventDefault();
-    await setSyncFolder(folder.trim() || null);
+    setSyncStatus("");
+    setSyncError("");
+    try {
+      await setSyncFolder(folder.trim() || null);
+      setSyncStatus(folder.trim() ? "Sync-Ordner gespeichert und synchronisiert." : "Sync-Ordner entfernt.");
+    } catch (error) {
+      setSyncError(error instanceof Error ? error.message : String(error));
+    }
+  }
+
+  async function pull() {
+    setSyncStatus("");
+    setSyncError("");
+    try {
+      await pullSync();
+      setSyncStatus("Stand aus dem Sync-Ordner geholt.");
+    } catch (error) {
+      setSyncError(error instanceof Error ? error.message : String(error));
+    }
   }
 
   return (
@@ -65,8 +89,10 @@ export function ProfilePanel() {
         <Input id="profile-sync-folder" value={folder} onChange={(_, data) => setFolder(data.value)} placeholder="/gemeinsamer/ordner" />
         <div className="button-row">
           <Button type="submit">{t("save")}</Button>
-          <Button type="button" onClick={() => void pullSync()}>Pull</Button>
+          <Button type="button" onClick={() => void pull()}>Pull</Button>
         </div>
+        {syncStatus && <p className="sync-status">{syncStatus}</p>}
+        {syncError && <p className="form-error">{syncError}</p>}
       </form>
     </section>
   );

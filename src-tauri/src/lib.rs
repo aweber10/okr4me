@@ -93,6 +93,9 @@ fn get_sync_config(app: AppHandle) -> Result<SyncConfig, String> {
 
 #[tauri::command]
 fn set_sync_config(app: AppHandle, folder_path: Option<String>) -> Result<SyncConfig, String> {
+    if let Some(path) = &folder_path {
+        fs::create_dir_all(path).map_err(|err| format!("Sync folder could not be created: {err}"))?;
+    }
     let config = SyncConfig { folder_path };
     let raw = serde_json::to_string_pretty(&config).map_err(|err| format!("Sync config could not be serialized: {err}"))?;
     fs::write(sync_config_path(&app)?, raw).map_err(|err| format!("Sync config could not be written: {err}"))?;
@@ -105,6 +108,7 @@ fn sync_pull(app: AppHandle) -> Result<Vec<String>, String> {
     let Some(folder_path) = config.folder_path else {
         return Ok(Vec::new());
     };
+    fs::create_dir_all(&folder_path).map_err(|err| format!("Sync folder could not be created: {err}"))?;
     let mut packages = Vec::new();
     for entry in fs::read_dir(folder_path).map_err(|err| format!("Sync folder could not be read: {err}"))? {
         let entry = entry.map_err(|err| format!("Sync entry could not be read: {err}"))?;

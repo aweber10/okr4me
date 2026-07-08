@@ -323,6 +323,12 @@ p {
   font-size: 13px;
 }
 
+.sync-status {
+  margin: 0;
+  color: #107c10;
+  font-size: 13px;
+}
+
 .cross-link-manager {
   display: grid;
   grid-template-columns: minmax(240px, 1fr) minmax(260px, 1.2fr);
@@ -499,6 +505,34 @@ p {
   overflow: hidden;
 }
 
+.graph-links {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.graph-link {
+  stroke: #7a8695;
+  stroke-width: 0.35;
+  vector-effect: non-scaling-stroke;
+}
+
+.graph-link.crossLink {
+  stroke: #c19c00;
+  stroke-width: 0.5;
+  stroke-dasharray: 2 1.5;
+}
+
+#graph-arrow-parent {
+  fill: #7a8695;
+}
+
+#graph-arrow-cross {
+  fill: #c19c00;
+}
+
 .graph-node {
   position: absolute;
   width: 150px;
@@ -508,6 +542,7 @@ p {
   padding: 10px;
   background: #f7fbff;
   box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+  z-index: 1;
 }
 
 .graph-node.keyResult {

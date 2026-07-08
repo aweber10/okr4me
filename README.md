@@ -93,14 +93,13 @@ npm run build
 npm run tauri build
 ```
 
-Die erzeugten Dateien liegen danach unter:
+Die gebaute Anwendung liegt danach unter:
 
 ```text
 src-tauri\target\release\
-src-tauri\target\release\bundle\
 ```
 
-Hinweis: In `src-tauri/tauri.conf.json` ist `bundle.active` aktuell auf `false` gesetzt. Damit wird primaer die Anwendung gebaut; Installer-/Bundle-Artefakte entstehen erst, wenn das Bundling in der Tauri-Konfiguration aktiviert wird.
+Hinweis: In `src-tauri/tauri.conf.json` ist `bundle.active` aktuell auf `false` gesetzt. Damit wird primaer die Anwendung gebaut. Installer-/Bundle-Artefakte unter `src-tauri\target\release\bundle\` entstehen erst, wenn das Bundling in der Tauri-Konfiguration aktiviert wird.
 
 ## Nuetzliche Hinweise
 
@@ -111,4 +110,3 @@ Hinweis: In `src-tauri/tauri.conf.json` ist `bundle.active` aktuell auf `false` 
 ```bash
 npm run tauri dev
 ```
-

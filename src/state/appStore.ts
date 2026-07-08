@@ -68,6 +68,10 @@ export const useAppStore = create<AppState>((set, get) => ({
   initialize: async () => {
     const [identity, syncFolder] = await Promise.all([loadIdentity(), getSyncFolder()]);
     let document = await loadDocument();
+    if (syncFolder) {
+      document = mergeDocuments(document, await syncPull());
+      await saveDocument(document);
+    }
     if (identity) {
       document = ensureParticipant(document, { localId: identity.localId, displayName: identity.displayName });
       await saveDocument(document);
@@ -100,6 +104,11 @@ export const useAppStore = create<AppState>((set, get) => ({
   setSyncFolder: async (folder) => {
     await setSyncFolder(folder);
     set({ syncFolder: folder });
+    if (!folder) return;
+    const merged = mergeDocuments(get().document, await syncPull());
+    await saveDocument(merged);
+    await syncPush(merged);
+    set({ document: merged });
   },
 
   pullSync: async () => {
