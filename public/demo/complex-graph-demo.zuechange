@@ -1,0 +1,1352 @@
+{
+  "participants": {
+    "p-andreas": {
+      "id": "p-andreas",
+      "displayName": "AndreasW",
+      "language": "de",
+      "roleDescription": "",
+      "about": "",
+      "orgUnitId": "ou-onsite",
+      "isCoordinator": true
+    },
+    "p-mira": {
+      "id": "p-mira",
+      "displayName": "Mira K.",
+      "language": "de",
+      "roleDescription": "",
+      "about": "",
+      "orgUnitId": "ou-platform",
+      "isCoordinator": false
+    },
+    "p-jonas": {
+      "id": "p-jonas",
+      "displayName": "Jonas R.",
+      "language": "de",
+      "roleDescription": "",
+      "about": "",
+      "orgUnitId": "ou-platform",
+      "isCoordinator": false
+    },
+    "p-samira": {
+      "id": "p-samira",
+      "displayName": "Samira L.",
+      "language": "de",
+      "roleDescription": "",
+      "about": "",
+      "orgUnitId": "ou-delivery",
+      "isCoordinator": false
+    },
+    "p-tom": {
+      "id": "p-tom",
+      "displayName": "Tom B.",
+      "language": "de",
+      "roleDescription": "",
+      "about": "",
+      "orgUnitId": "ou-delivery",
+      "isCoordinator": false
+    },
+    "p-lena": {
+      "id": "p-lena",
+      "displayName": "Lena S.",
+      "language": "de",
+      "roleDescription": "",
+      "about": "",
+      "orgUnitId": "ou-customer",
+      "isCoordinator": false
+    },
+    "p-nora": {
+      "id": "p-nora",
+      "displayName": "Nora H.",
+      "language": "de",
+      "roleDescription": "",
+      "about": "",
+      "orgUnitId": "ou-enablement",
+      "isCoordinator": false
+    },
+    "p-ivan": {
+      "id": "p-ivan",
+      "displayName": "Ivan P.",
+      "language": "de",
+      "roleDescription": "",
+      "about": "",
+      "orgUnitId": "ou-enablement",
+      "isCoordinator": false
+    }
+  },
+  "orgUnits": {
+    "ou-onsite": {
+      "id": "ou-onsite",
+      "name": "onsite",
+      "description": "Gesamtbereich",
+      "color": "#0f6cbd"
+    },
+    "ou-platform": {
+      "id": "ou-platform",
+      "name": "Platform",
+      "description": "Entwicklungsplattform",
+      "color": "#7c3aed",
+      "parentId": "ou-onsite"
+    },
+    "ou-delivery": {
+      "id": "ou-delivery",
+      "name": "Delivery",
+      "description": "Produktlieferung",
+      "color": "#107c10",
+      "parentId": "ou-onsite"
+    },
+    "ou-customer": {
+      "id": "ou-customer",
+      "name": "Customer Success",
+      "description": "Kundennahe Arbeit",
+      "color": "#c19c00",
+      "parentId": "ou-onsite"
+    },
+    "ou-enablement": {
+      "id": "ou-enablement",
+      "name": "Enablement",
+      "description": "Wissen und Methoden",
+      "color": "#d13438",
+      "parentId": "ou-onsite"
+    }
+  },
+  "objectives": {
+    "o-onsite-ai": {
+      "id": "o-onsite-ai",
+      "description": "Bereich nutzt KI-gestützte Arbeitsweisen produktiv",
+      "createdAt": "2026-07-09T10:00:00.000Z",
+      "startDate": "2026-07-01",
+      "endDate": "2027-06-30",
+      "quarter": 3,
+      "year": 2026,
+      "owner": {
+        "kind": "orgUnit",
+        "id": "ou-onsite"
+      },
+      "type": "strategic",
+      "keyResultIds": [
+        "kr-ai-training",
+        "kr-ai-usecases",
+        "kr-ai-security"
+      ],
+      "crossLinkedKeyResultIds": [
+        "kr-opencode-install",
+        "kr-opencode-session",
+        "kr-playbook-draft"
+      ],
+      "commentIds": []
+    },
+    "o-onsite-transparency": {
+      "id": "o-onsite-transparency",
+      "description": "OKR-Transparenz über Teamgrenzen hinweg erhöhen",
+      "createdAt": "2026-07-09T10:00:00.000Z",
+      "startDate": "2026-07-01",
+      "endDate": "2026-09-30",
+      "quarter": 3,
+      "year": 2026,
+      "owner": {
+        "kind": "orgUnit",
+        "id": "ou-onsite"
+      },
+      "type": "quarterly",
+      "keyResultIds": [
+        "kr-trans-map",
+        "kr-trans-links"
+      ],
+      "crossLinkedKeyResultIds": [
+        "kr-adoption-friction"
+      ],
+      "commentIds": []
+    },
+    "o-platform-devex": {
+      "id": "o-platform-devex",
+      "description": "Entwicklungsumgebung ist reproduzierbar und schnell",
+      "createdAt": "2026-07-09T10:00:00.000Z",
+      "startDate": "2026-07-01",
+      "endDate": "2026-09-30",
+      "quarter": 3,
+      "year": 2026,
+      "owner": {
+        "kind": "orgUnit",
+        "id": "ou-platform"
+      },
+      "type": "quarterly",
+      "keyResultIds": [
+        "kr-dev-env",
+        "kr-dev-docs"
+      ],
+      "crossLinkedKeyResultIds": [
+        "kr-opencode-install",
+        "kr-mira-cache"
+      ],
+      "commentIds": []
+    },
+    "o-platform-quality": {
+      "id": "o-platform-quality",
+      "description": "Qualitätsrisiken früh im Entwicklungsprozess erkennen",
+      "createdAt": "2026-07-09T10:00:00.000Z",
+      "startDate": "2026-07-01",
+      "endDate": "2026-09-30",
+      "quarter": 3,
+      "year": 2026,
+      "owner": {
+        "kind": "orgUnit",
+        "id": "ou-platform"
+      },
+      "type": "quarterly",
+      "keyResultIds": [
+        "kr-quality-tests",
+        "kr-quality-audit"
+      ],
+      "crossLinkedKeyResultIds": [
+        "kr-release-smoke",
+        "kr-samira-causes"
+      ],
+      "commentIds": []
+    },
+    "o-delivery-flow": {
+      "id": "o-delivery-flow",
+      "description": "Durchlaufzeit für Lieferungen spürbar senken",
+      "createdAt": "2026-07-09T10:00:00.000Z",
+      "startDate": "2026-07-01",
+      "endDate": "2026-09-30",
+      "quarter": 3,
+      "year": 2026,
+      "owner": {
+        "kind": "orgUnit",
+        "id": "ou-delivery"
+      },
+      "type": "quarterly",
+      "keyResultIds": [
+        "kr-flow-cycle",
+        "kr-flow-wip"
+      ],
+      "crossLinkedKeyResultIds": [
+        "kr-mira-cache",
+        "kr-feedback-backlog"
+      ],
+      "commentIds": []
+    },
+    "o-delivery-release": {
+      "id": "o-delivery-release",
+      "description": "Releasefähigkeit ohne Sonderaktionen herstellen",
+      "createdAt": "2026-07-09T10:00:00.000Z",
+      "startDate": "2026-07-01",
+      "endDate": "2026-09-30",
+      "quarter": 3,
+      "year": 2026,
+      "owner": {
+        "kind": "orgUnit",
+        "id": "ou-delivery"
+      },
+      "type": "quarterly",
+      "keyResultIds": [
+        "kr-release-oneclick",
+        "kr-release-smoke"
+      ],
+      "crossLinkedKeyResultIds": [
+        "kr-quality-tests",
+        "kr-samira-board"
+      ],
+      "commentIds": []
+    },
+    "o-customer-feedback": {
+      "id": "o-customer-feedback",
+      "description": "Kundenfeedback systematisch in Planung überführen",
+      "createdAt": "2026-07-09T10:00:00.000Z",
+      "startDate": "2026-07-01",
+      "endDate": "2026-09-30",
+      "quarter": 3,
+      "year": 2026,
+      "owner": {
+        "kind": "orgUnit",
+        "id": "ou-customer"
+      },
+      "type": "quarterly",
+      "keyResultIds": [
+        "kr-feedback-cadence",
+        "kr-feedback-backlog"
+      ],
+      "crossLinkedKeyResultIds": [
+        "kr-trans-map",
+        "kr-adoption-pilots"
+      ],
+      "commentIds": []
+    },
+    "o-customer-adoption": {
+      "id": "o-customer-adoption",
+      "description": "Nutzung der neuen OKR-App im Pilot stabilisieren",
+      "createdAt": "2026-07-09T10:00:00.000Z",
+      "startDate": "2026-07-01",
+      "endDate": "2026-09-30",
+      "quarter": 3,
+      "year": 2026,
+      "owner": {
+        "kind": "orgUnit",
+        "id": "ou-customer"
+      },
+      "type": "quarterly",
+      "keyResultIds": [
+        "kr-adoption-pilots",
+        "kr-adoption-friction"
+      ],
+      "crossLinkedKeyResultIds": [
+        "kr-opencode-session",
+        "kr-playbook-rituals"
+      ],
+      "commentIds": []
+    },
+    "o-enable-opencode": {
+      "id": "o-enable-opencode",
+      "description": "Alle MA wissen wie man Opencode installiert und nutzt",
+      "createdAt": "2026-07-09T10:00:00.000Z",
+      "startDate": "2026-07-01",
+      "endDate": "2026-09-30",
+      "quarter": 3,
+      "year": 2026,
+      "owner": {
+        "kind": "orgUnit",
+        "id": "ou-enablement"
+      },
+      "type": "quarterly",
+      "keyResultIds": [
+        "kr-opencode-install",
+        "kr-opencode-session"
+      ],
+      "crossLinkedKeyResultIds": [
+        "kr-dev-docs",
+        "kr-release-oneclick"
+      ],
+      "commentIds": []
+    },
+    "o-enable-playbook": {
+      "id": "o-enable-playbook",
+      "description": "Ein gemeinsames Arbeitsweisen-Playbook etablieren",
+      "createdAt": "2026-07-09T10:00:00.000Z",
+      "startDate": "2026-07-01",
+      "endDate": "2026-09-30",
+      "quarter": 3,
+      "year": 2026,
+      "owner": {
+        "kind": "orgUnit",
+        "id": "ou-enablement"
+      },
+      "type": "quarterly",
+      "keyResultIds": [
+        "kr-playbook-draft",
+        "kr-playbook-rituals"
+      ],
+      "crossLinkedKeyResultIds": [
+        "kr-feedback-cadence",
+        "kr-quality-audit"
+      ],
+      "commentIds": []
+    },
+    "o-mira-ci": {
+      "id": "o-mira-ci",
+      "description": "CI-Wartezeiten für Entwickler halbieren",
+      "createdAt": "2026-07-09T10:00:00.000Z",
+      "startDate": "2026-07-01",
+      "endDate": "2026-09-30",
+      "quarter": 3,
+      "year": 2026,
+      "owner": {
+        "kind": "participant",
+        "id": "p-mira"
+      },
+      "type": "quarterly",
+      "keyResultIds": [
+        "kr-mira-cache",
+        "kr-mira-flaky"
+      ],
+      "crossLinkedKeyResultIds": [
+        "kr-dev-env",
+        "kr-quality-tests"
+      ],
+      "commentIds": []
+    },
+    "o-samira-incidents": {
+      "id": "o-samira-incidents",
+      "description": "Wiederkehrende Lieferhindernisse sichtbar machen",
+      "createdAt": "2026-07-09T10:00:00.000Z",
+      "startDate": "2026-07-01",
+      "endDate": "2026-09-30",
+      "quarter": 3,
+      "year": 2026,
+      "owner": {
+        "kind": "participant",
+        "id": "p-samira"
+      },
+      "type": "quarterly",
+      "keyResultIds": [
+        "kr-samira-board",
+        "kr-samira-causes"
+      ],
+      "crossLinkedKeyResultIds": [
+        "kr-flow-wip",
+        "kr-release-smoke"
+      ],
+      "commentIds": []
+    }
+  },
+  "keyResults": {
+    "kr-ai-training": {
+      "id": "kr-ai-training",
+      "objectiveId": "o-onsite-ai",
+      "description": "60 Personen haben eine KI-Einführung absolviert",
+      "startValue": 0,
+      "targetValue": 60,
+      "currentValue": 35,
+      "stepSize": 5,
+      "weight": 2,
+      "resultType": "Personen",
+      "timeEventIds": [
+        "te-kr-ai-training"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": []
+    },
+    "kr-ai-usecases": {
+      "id": "kr-ai-usecases",
+      "objectiveId": "o-onsite-ai",
+      "description": "12 produktive KI-Anwendungsfälle dokumentiert",
+      "startValue": 0,
+      "targetValue": 12,
+      "currentValue": 5,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "Use Cases",
+      "timeEventIds": [
+        "te-kr-ai-usecases"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": []
+    },
+    "kr-ai-security": {
+      "id": "kr-ai-security",
+      "objectiveId": "o-onsite-ai",
+      "description": "Freigegebene Nutzungsleitlinie veröffentlicht",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 80,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-ai-security"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": []
+    },
+    "kr-trans-map": {
+      "id": "kr-trans-map",
+      "objectiveId": "o-onsite-transparency",
+      "description": "Alle Team-Objectives sind im Graph sichtbar",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 70,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-trans-map"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-customer-feedback"
+      ]
+    },
+    "kr-trans-links": {
+      "id": "kr-trans-links",
+      "objectiveId": "o-onsite-transparency",
+      "description": "Mindestens 25 teamübergreifende Links gepflegt",
+      "startValue": 0,
+      "targetValue": 25,
+      "currentValue": 18,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "Links",
+      "timeEventIds": [
+        "te-kr-trans-links"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": []
+    },
+    "kr-dev-env": {
+      "id": "kr-dev-env",
+      "objectiveId": "o-platform-devex",
+      "description": "Setup-Zeit neuer Rechner unter 30 Minuten",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 45,
+      "stepSize": 5,
+      "weight": 2,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-dev-env"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-mira-ci"
+      ]
+    },
+    "kr-dev-docs": {
+      "id": "kr-dev-docs",
+      "objectiveId": "o-platform-devex",
+      "description": "Onboarding-Checkliste für Dev-Setup ist vollständig",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 65,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-dev-docs"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-enable-opencode"
+      ]
+    },
+    "kr-quality-tests": {
+      "id": "kr-quality-tests",
+      "objectiveId": "o-platform-quality",
+      "description": "Kritische Workflows haben UI-Regressionstests",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 55,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-quality-tests"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-delivery-release",
+        "o-mira-ci"
+      ]
+    },
+    "kr-quality-audit": {
+      "id": "kr-quality-audit",
+      "objectiveId": "o-platform-quality",
+      "description": "Wöchentlicher Qualitätsbericht automatisiert",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 30,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-quality-audit"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-enable-playbook"
+      ]
+    },
+    "kr-flow-cycle": {
+      "id": "kr-flow-cycle",
+      "objectiveId": "o-delivery-flow",
+      "description": "Median Cycle Time unter 5 Tage",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 50,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-flow-cycle"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": []
+    },
+    "kr-flow-wip": {
+      "id": "kr-flow-wip",
+      "objectiveId": "o-delivery-flow",
+      "description": "WIP-Limit in allen Teams sichtbar eingehalten",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 40,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-flow-wip"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-samira-incidents"
+      ]
+    },
+    "kr-release-oneclick": {
+      "id": "kr-release-oneclick",
+      "objectiveId": "o-delivery-release",
+      "description": "Release-Checkliste ohne manuelle Nacharbeit erfüllt",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 45,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-release-oneclick"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-enable-opencode"
+      ]
+    },
+    "kr-release-smoke": {
+      "id": "kr-release-smoke",
+      "objectiveId": "o-delivery-release",
+      "description": "Smoke Tests laufen vor jedem Release",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 75,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-release-smoke"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-platform-quality",
+        "o-samira-incidents"
+      ]
+    },
+    "kr-feedback-cadence": {
+      "id": "kr-feedback-cadence",
+      "objectiveId": "o-customer-feedback",
+      "description": "Zwei strukturierte Feedback-Termine pro Monat",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 60,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-feedback-cadence"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-enable-playbook"
+      ]
+    },
+    "kr-feedback-backlog": {
+      "id": "kr-feedback-backlog",
+      "objectiveId": "o-customer-feedback",
+      "description": "Top-10 Feedbackpunkte sind priorisiert",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 50,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-feedback-backlog"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-delivery-flow"
+      ]
+    },
+    "kr-adoption-pilots": {
+      "id": "kr-adoption-pilots",
+      "objectiveId": "o-customer-adoption",
+      "description": "Vier Pilotgruppen nutzen okr4me aktiv",
+      "startValue": 0,
+      "targetValue": 4,
+      "currentValue": 25,
+      "stepSize": 5,
+      "weight": 2,
+      "resultType": "Gruppen",
+      "timeEventIds": [
+        "te-kr-adoption-pilots"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-customer-feedback"
+      ]
+    },
+    "kr-adoption-friction": {
+      "id": "kr-adoption-friction",
+      "objectiveId": "o-customer-adoption",
+      "description": "Häufigste Bedienhürden sind dokumentiert",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 80,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-adoption-friction"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-onsite-transparency"
+      ]
+    },
+    "kr-opencode-install": {
+      "id": "kr-opencode-install",
+      "objectiveId": "o-enable-opencode",
+      "description": "90 Prozent haben Opencode lokal installiert",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 65,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-opencode-install"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-onsite-ai",
+        "o-platform-devex"
+      ]
+    },
+    "kr-opencode-session": {
+      "id": "kr-opencode-session",
+      "objectiveId": "o-enable-opencode",
+      "description": "Drei Hands-on Sessions durchgeführt",
+      "startValue": 0,
+      "targetValue": 3,
+      "currentValue": 2,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "Sessions",
+      "timeEventIds": [
+        "te-kr-opencode-session"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-onsite-ai",
+        "o-customer-adoption"
+      ]
+    },
+    "kr-playbook-draft": {
+      "id": "kr-playbook-draft",
+      "objectiveId": "o-enable-playbook",
+      "description": "Playbook v1 ist reviewt",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 40,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-playbook-draft"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-onsite-ai"
+      ]
+    },
+    "kr-playbook-rituals": {
+      "id": "kr-playbook-rituals",
+      "objectiveId": "o-enable-playbook",
+      "description": "Teamrituale sind einheitlich beschrieben",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 55,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-playbook-rituals"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-customer-adoption"
+      ]
+    },
+    "kr-mira-cache": {
+      "id": "kr-mira-cache",
+      "objectiveId": "o-mira-ci",
+      "description": "Dependency Cache reduziert Laufzeit um 40 Prozent",
+      "startValue": 0,
+      "targetValue": 40,
+      "currentValue": 20,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-mira-cache"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-platform-devex",
+        "o-delivery-flow"
+      ]
+    },
+    "kr-mira-flaky": {
+      "id": "kr-mira-flaky",
+      "objectiveId": "o-mira-ci",
+      "description": "Flaky Tests unter 2 Prozent",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 35,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-mira-flaky"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": []
+    },
+    "kr-samira-board": {
+      "id": "kr-samira-board",
+      "objectiveId": "o-samira-incidents",
+      "description": "Hindernisboard wird wöchentlich aktualisiert",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 70,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-samira-board"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-delivery-release"
+      ]
+    },
+    "kr-samira-causes": {
+      "id": "kr-samira-causes",
+      "objectiveId": "o-samira-incidents",
+      "description": "Top-5 Ursachen sind mit Maßnahmen versehen",
+      "startValue": 0,
+      "targetValue": 100,
+      "currentValue": 45,
+      "stepSize": 5,
+      "weight": 1,
+      "resultType": "%",
+      "timeEventIds": [
+        "te-kr-samira-causes"
+      ],
+      "commentIds": [],
+      "crossLinkedObjectiveIds": [
+        "o-platform-quality"
+      ]
+    }
+  },
+  "timeEvents": {
+    "te-kr-ai-training": {
+      "id": "te-kr-ai-training",
+      "keyResultId": "kr-ai-training",
+      "value": 35,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-ai-usecases": {
+      "id": "te-kr-ai-usecases",
+      "keyResultId": "kr-ai-usecases",
+      "value": 5,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-ai-security": {
+      "id": "te-kr-ai-security",
+      "keyResultId": "kr-ai-security",
+      "value": 80,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-trans-map": {
+      "id": "te-kr-trans-map",
+      "keyResultId": "kr-trans-map",
+      "value": 70,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-trans-links": {
+      "id": "te-kr-trans-links",
+      "keyResultId": "kr-trans-links",
+      "value": 18,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-dev-env": {
+      "id": "te-kr-dev-env",
+      "keyResultId": "kr-dev-env",
+      "value": 45,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-dev-docs": {
+      "id": "te-kr-dev-docs",
+      "keyResultId": "kr-dev-docs",
+      "value": 65,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-quality-tests": {
+      "id": "te-kr-quality-tests",
+      "keyResultId": "kr-quality-tests",
+      "value": 55,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-quality-audit": {
+      "id": "te-kr-quality-audit",
+      "keyResultId": "kr-quality-audit",
+      "value": 30,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-flow-cycle": {
+      "id": "te-kr-flow-cycle",
+      "keyResultId": "kr-flow-cycle",
+      "value": 50,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-flow-wip": {
+      "id": "te-kr-flow-wip",
+      "keyResultId": "kr-flow-wip",
+      "value": 40,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-release-oneclick": {
+      "id": "te-kr-release-oneclick",
+      "keyResultId": "kr-release-oneclick",
+      "value": 45,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-release-smoke": {
+      "id": "te-kr-release-smoke",
+      "keyResultId": "kr-release-smoke",
+      "value": 75,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-feedback-cadence": {
+      "id": "te-kr-feedback-cadence",
+      "keyResultId": "kr-feedback-cadence",
+      "value": 60,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-feedback-backlog": {
+      "id": "te-kr-feedback-backlog",
+      "keyResultId": "kr-feedback-backlog",
+      "value": 50,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-adoption-pilots": {
+      "id": "te-kr-adoption-pilots",
+      "keyResultId": "kr-adoption-pilots",
+      "value": 25,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-adoption-friction": {
+      "id": "te-kr-adoption-friction",
+      "keyResultId": "kr-adoption-friction",
+      "value": 80,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-opencode-install": {
+      "id": "te-kr-opencode-install",
+      "keyResultId": "kr-opencode-install",
+      "value": 65,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-opencode-session": {
+      "id": "te-kr-opencode-session",
+      "keyResultId": "kr-opencode-session",
+      "value": 2,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-playbook-draft": {
+      "id": "te-kr-playbook-draft",
+      "keyResultId": "kr-playbook-draft",
+      "value": 40,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-playbook-rituals": {
+      "id": "te-kr-playbook-rituals",
+      "keyResultId": "kr-playbook-rituals",
+      "value": 55,
+      "participantId": "p-andreas",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-mira-cache": {
+      "id": "te-kr-mira-cache",
+      "keyResultId": "kr-mira-cache",
+      "value": 20,
+      "participantId": "p-mira",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-mira-flaky": {
+      "id": "te-kr-mira-flaky",
+      "keyResultId": "kr-mira-flaky",
+      "value": 35,
+      "participantId": "p-mira",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-samira-board": {
+      "id": "te-kr-samira-board",
+      "keyResultId": "kr-samira-board",
+      "value": 70,
+      "participantId": "p-samira",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "te-kr-samira-causes": {
+      "id": "te-kr-samira-causes",
+      "keyResultId": "kr-samira-causes",
+      "value": 45,
+      "participantId": "p-samira",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    }
+  },
+  "comments": {},
+  "changeLog": {
+    "log-objective-1": {
+      "id": "log-objective-1",
+      "entityKind": "objective",
+      "entityId": "o-onsite-ai",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Objective: Bereich nutzt KI-gestützte Arbeitsweisen produktiv",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-objective-2": {
+      "id": "log-objective-2",
+      "entityKind": "objective",
+      "entityId": "o-onsite-transparency",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Objective: OKR-Transparenz über Teamgrenzen hinweg erhöhen",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-objective-3": {
+      "id": "log-objective-3",
+      "entityKind": "objective",
+      "entityId": "o-platform-devex",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Objective: Entwicklungsumgebung ist reproduzierbar und schnell",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-objective-4": {
+      "id": "log-objective-4",
+      "entityKind": "objective",
+      "entityId": "o-platform-quality",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Objective: Qualitätsrisiken früh im Entwicklungsprozess erkennen",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-objective-5": {
+      "id": "log-objective-5",
+      "entityKind": "objective",
+      "entityId": "o-delivery-flow",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Objective: Durchlaufzeit für Lieferungen spürbar senken",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-objective-6": {
+      "id": "log-objective-6",
+      "entityKind": "objective",
+      "entityId": "o-delivery-release",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Objective: Releasefähigkeit ohne Sonderaktionen herstellen",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-objective-7": {
+      "id": "log-objective-7",
+      "entityKind": "objective",
+      "entityId": "o-customer-feedback",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Objective: Kundenfeedback systematisch in Planung überführen",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-objective-8": {
+      "id": "log-objective-8",
+      "entityKind": "objective",
+      "entityId": "o-customer-adoption",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Objective: Nutzung der neuen OKR-App im Pilot stabilisieren",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-objective-9": {
+      "id": "log-objective-9",
+      "entityKind": "objective",
+      "entityId": "o-enable-opencode",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Objective: Alle MA wissen wie man Opencode installiert und nutzt",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-objective-10": {
+      "id": "log-objective-10",
+      "entityKind": "objective",
+      "entityId": "o-enable-playbook",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Objective: Ein gemeinsames Arbeitsweisen-Playbook etablieren",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-objective-11": {
+      "id": "log-objective-11",
+      "entityKind": "objective",
+      "entityId": "o-mira-ci",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Objective: CI-Wartezeiten für Entwickler halbieren",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-objective-12": {
+      "id": "log-objective-12",
+      "entityKind": "objective",
+      "entityId": "o-samira-incidents",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Objective: Wiederkehrende Lieferhindernisse sichtbar machen",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-1": {
+      "id": "log-kr-1",
+      "entityKind": "keyResult",
+      "entityId": "kr-ai-training",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: 60 Personen haben eine KI-Einführung absolviert",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-2": {
+      "id": "log-kr-2",
+      "entityKind": "keyResult",
+      "entityId": "kr-ai-usecases",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: 12 produktive KI-Anwendungsfälle dokumentiert",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-3": {
+      "id": "log-kr-3",
+      "entityKind": "keyResult",
+      "entityId": "kr-ai-security",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Freigegebene Nutzungsleitlinie veröffentlicht",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-4": {
+      "id": "log-kr-4",
+      "entityKind": "keyResult",
+      "entityId": "kr-trans-map",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Alle Team-Objectives sind im Graph sichtbar",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-5": {
+      "id": "log-kr-5",
+      "entityKind": "keyResult",
+      "entityId": "kr-trans-links",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Mindestens 25 teamübergreifende Links gepflegt",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-6": {
+      "id": "log-kr-6",
+      "entityKind": "keyResult",
+      "entityId": "kr-dev-env",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Setup-Zeit neuer Rechner unter 30 Minuten",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-7": {
+      "id": "log-kr-7",
+      "entityKind": "keyResult",
+      "entityId": "kr-dev-docs",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Onboarding-Checkliste für Dev-Setup ist vollständig",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-8": {
+      "id": "log-kr-8",
+      "entityKind": "keyResult",
+      "entityId": "kr-quality-tests",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Kritische Workflows haben UI-Regressionstests",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-9": {
+      "id": "log-kr-9",
+      "entityKind": "keyResult",
+      "entityId": "kr-quality-audit",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Wöchentlicher Qualitätsbericht automatisiert",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-10": {
+      "id": "log-kr-10",
+      "entityKind": "keyResult",
+      "entityId": "kr-flow-cycle",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Median Cycle Time unter 5 Tage",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-11": {
+      "id": "log-kr-11",
+      "entityKind": "keyResult",
+      "entityId": "kr-flow-wip",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: WIP-Limit in allen Teams sichtbar eingehalten",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-12": {
+      "id": "log-kr-12",
+      "entityKind": "keyResult",
+      "entityId": "kr-release-oneclick",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Release-Checkliste ohne manuelle Nacharbeit erfüllt",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-13": {
+      "id": "log-kr-13",
+      "entityKind": "keyResult",
+      "entityId": "kr-release-smoke",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Smoke Tests laufen vor jedem Release",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-14": {
+      "id": "log-kr-14",
+      "entityKind": "keyResult",
+      "entityId": "kr-feedback-cadence",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Zwei strukturierte Feedback-Termine pro Monat",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-15": {
+      "id": "log-kr-15",
+      "entityKind": "keyResult",
+      "entityId": "kr-feedback-backlog",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Top-10 Feedbackpunkte sind priorisiert",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-16": {
+      "id": "log-kr-16",
+      "entityKind": "keyResult",
+      "entityId": "kr-adoption-pilots",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Vier Pilotgruppen nutzen okr4me aktiv",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-17": {
+      "id": "log-kr-17",
+      "entityKind": "keyResult",
+      "entityId": "kr-adoption-friction",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Häufigste Bedienhürden sind dokumentiert",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-18": {
+      "id": "log-kr-18",
+      "entityKind": "keyResult",
+      "entityId": "kr-opencode-install",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: 90 Prozent haben Opencode lokal installiert",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-19": {
+      "id": "log-kr-19",
+      "entityKind": "keyResult",
+      "entityId": "kr-opencode-session",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Drei Hands-on Sessions durchgeführt",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-20": {
+      "id": "log-kr-20",
+      "entityKind": "keyResult",
+      "entityId": "kr-playbook-draft",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Playbook v1 ist reviewt",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-21": {
+      "id": "log-kr-21",
+      "entityKind": "keyResult",
+      "entityId": "kr-playbook-rituals",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Teamrituale sind einheitlich beschrieben",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-22": {
+      "id": "log-kr-22",
+      "entityKind": "keyResult",
+      "entityId": "kr-mira-cache",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Dependency Cache reduziert Laufzeit um 40 Prozent",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-23": {
+      "id": "log-kr-23",
+      "entityKind": "keyResult",
+      "entityId": "kr-mira-flaky",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Flaky Tests unter 2 Prozent",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-24": {
+      "id": "log-kr-24",
+      "entityKind": "keyResult",
+      "entityId": "kr-samira-board",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Hindernisboard wird wöchentlich aktualisiert",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    },
+    "log-kr-25": {
+      "id": "log-kr-25",
+      "entityKind": "keyResult",
+      "entityId": "kr-samira-causes",
+      "action": "create",
+      "participantId": "p-andreas",
+      "summary": "Created Key Result: Top-5 Ursachen sind mit Maßnahmen versehen",
+      "createdAt": "2026-07-09T10:00:00.000Z"
+    }
+  },
+  "coordinatorIds": [
+    "p-andreas"
+  ]
+}
