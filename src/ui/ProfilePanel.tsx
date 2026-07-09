@@ -16,7 +16,11 @@ function orgPath(units: OrgUnit[], unitId?: string): string {
   return parts.join(" / ");
 }
 
-export function ProfilePanel() {
+interface Props {
+  compact?: boolean;
+}
+
+export function ProfilePanel({ compact }: Props) {
   const { t } = useTranslation();
   const identity = useAppStore((state) => state.identity);
   const document = useAppStore((state) => state.document);
@@ -61,7 +65,7 @@ export function ProfilePanel() {
 
   return (
     <section className="panel">
-      <h2>{t("profile")}</h2>
+      {!compact && <h2>{t("profile")}</h2>}
       <div className="avatar">{participant.displayName.slice(0, 2).toUpperCase()}</div>
       <Label htmlFor="profile-display-name">{t("displayName")}</Label>
       <Input id="profile-display-name" value={participant.displayName} onChange={(_, data) => void updateCurrentParticipant({ displayName: data.value })} />

@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button, Spinner } from "@fluentui/react-components";
-import { Network, Printer, Target, TreePine } from "lucide-react";
+import { Network, Printer, Target, TreePine, UserCircle, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n";
 import { useAppStore } from "../state/appStore";
@@ -23,6 +23,8 @@ export default function App() {
   const initialize = useAppStore((state) => state.initialize);
   const previousQuarter = useAppStore((state) => state.previousQuarter);
   const nextQuarter = useAppStore((state) => state.nextQuarter);
+  const syncFolder = useAppStore((state) => state.syncFolder);
+  const [profileOpen, setProfileOpen] = useState(false);
 
   useEffect(() => {
     void initialize();
@@ -55,13 +57,12 @@ export default function App() {
           <strong>{quarterLabel(selectedQuarter, participant?.language ?? "de")}</strong>
           <Button onClick={nextQuarter}>{t("next")}</Button>
           <Button icon={<Printer size={18} />} onClick={() => void printCurrentView()}>{t("print")}</Button>
+          {!syncFolder && <Button appearance="subtle" onClick={() => setProfileOpen(true)}>{t("syncSetup")}</Button>}
+          <Button icon={<UserCircle size={18} />} onClick={() => setProfileOpen(true)}>{t("profile")}</Button>
         </div>
       </header>
 
       <div className="workspace">
-        <aside className="sidebar section-not-printable">
-          <ProfilePanel />
-        </aside>
         <main className="content">
           {isPastQuarter(selectedQuarter) && <div className="notice">{t("pastQuarter")}</div>}
           {activeView === "goals" && <GoalsView />}
@@ -69,6 +70,23 @@ export default function App() {
           {activeView === "graph" && <RelationGraph />}
         </main>
       </div>
+      {profileOpen && (
+        <div className="modal-backdrop section-not-printable" role="presentation" onMouseDown={() => setProfileOpen(false)}>
+          <section
+            className="profile-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-label={t("profile")}
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <header className="dialog-header">
+              <h2>{t("profile")}</h2>
+              <Button aria-label={t("closeProfile")} icon={<X size={18} />} appearance="subtle" onClick={() => setProfileOpen(false)} />
+            </header>
+            <ProfilePanel compact />
+          </section>
+        </div>
+      )}
     </div>
   );
 }
