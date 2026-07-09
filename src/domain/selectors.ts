@@ -19,6 +19,20 @@ export function ownerLabel(document: ZueDocument, owner: OwnerRef): string {
   return document.orgUnits[owner.id]?.name ?? "Unbekannt";
 }
 
+function colorForString(value: string): string {
+  const colors = ["#0f6cbd", "#107c10", "#c19c00", "#d13438", "#8764b8", "#038387", "#ca5010", "#498205"];
+  let hash = 0;
+  for (let index = 0; index < value.length; index += 1) hash = (hash * 31 + value.charCodeAt(index)) % colors.length;
+  return colors[Math.abs(hash)];
+}
+
+export function ownerColor(document: ZueDocument, owner: OwnerRef): string {
+  if (owner.kind === "orgUnit") return document.orgUnits[owner.id]?.color || colorForString(owner.id);
+  const participant = document.participants[owner.id];
+  if (participant?.orgUnitId) return document.orgUnits[participant.orgUnitId]?.color || colorForString(participant.orgUnitId);
+  return colorForString(owner.id);
+}
+
 export function objectiveProgressById(document: ZueDocument, objectiveId: string): number {
   return objectiveProgress(keyResultsForObjective(document, objectiveId));
 }
@@ -43,6 +57,9 @@ export function graphForQuarter(document: ZueDocument, selected: Quarter): { nod
       kind: "objective",
       label: objective.description,
       ownerLabel: ownerLabel(document, objective.owner),
+      ownerKind: objective.owner.kind,
+      ownerId: objective.owner.id,
+      ownerColor: ownerColor(document, objective.owner),
       progress: objectiveProgressById(document, objective.id)
     });
     for (const keyResult of keyResultsForObjective(document, objective.id)) {
@@ -51,6 +68,9 @@ export function graphForQuarter(document: ZueDocument, selected: Quarter): { nod
         kind: "keyResult",
         label: keyResult.description,
         ownerLabel: ownerLabel(document, objective.owner),
+        ownerKind: objective.owner.kind,
+        ownerId: objective.owner.id,
+        ownerColor: ownerColor(document, objective.owner),
         progress: progressForValue(keyResult, keyResult.currentValue)
       });
       links.push({ source: `O${objective.id}`, target: `K${keyResult.id}`, kind: "parent" });

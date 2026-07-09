@@ -1,5 +1,5 @@
 import { FluentProvider, webLightTheme } from "@fluentui/react-components";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import "../i18n";
 import { createKeyResult, createObjective, emptyDocument, ensureParticipant, toggleCrossLink } from "../domain/document";
@@ -42,11 +42,13 @@ describe("RelationGraph", () => {
     });
   });
 
-  it("renders visible cross-links with labels instead of technical ids", () => {
+  it("renders a cluster map with cross-links and owner details", () => {
     renderGraph();
 
     expect(document.querySelector(".graph-link.crossLink")).toBeTruthy();
-    expect(screen.getByText("Source objective → Linked key result")).toBeInTheDocument();
+    expect(screen.getByText("Beziehungslandkarte")).toBeInTheDocument();
+    expect(within(screen.getByLabelText("Cluster-Informationen")).getByText(/2 Ziele .* 1 Besitzer .* 1 Cross-Links/)).toBeInTheDocument();
+    expect(screen.getByText("Ada")).toBeInTheDocument();
     expect(screen.queryByText(/O[0-9a-f-]+ → K[0-9a-f-]+/)).not.toBeInTheDocument();
   });
 });

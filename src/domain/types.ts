@@ -113,6 +113,9 @@ export interface GraphNode {
   kind: EntityKind;
   label: string;
   ownerLabel: string;
+  ownerKind: OwnerRef["kind"];
+  ownerId: string;
+  ownerColor: string;
   progress: number;
 }
 
