@@ -3,6 +3,7 @@ import { Button, Dropdown, Input, Label, Option, Textarea } from "@fluentui/reac
 import { useTranslation } from "react-i18next";
 import { useAppStore } from "../state/appStore";
 import type { OrgUnit } from "../domain/types";
+import { isTauri } from "../platform/persistence";
 
 function orgPath(units: OrgUnit[], unitId?: string): string {
   if (!unitId) return "";
@@ -88,16 +89,22 @@ export function ProfilePanel({ compact }: Props) {
       <Label htmlFor="profile-about">Über mich</Label>
       <Textarea id="profile-about" value={participant.about} maxLength={255} onChange={(_, data) => void updateCurrentParticipant({ about: data.value })} />
 
-      <form className="sync-form" onSubmit={(event) => void submit(event)}>
-        <Label htmlFor="profile-sync-folder">{t("syncFolder")}</Label>
-        <Input id="profile-sync-folder" value={folder} onChange={(_, data) => setFolder(data.value)} placeholder="/gemeinsamer/ordner" />
-        <div className="button-row">
-          <Button type="submit">{t("save")}</Button>
-          <Button type="button" onClick={() => void pull()}>Pull</Button>
+      {isTauri() ? (
+        <form className="sync-form" onSubmit={(event) => void submit(event)}>
+          <Label htmlFor="profile-sync-folder">{t("syncFolder")}</Label>
+          <Input id="profile-sync-folder" value={folder} onChange={(_, data) => setFolder(data.value)} placeholder="/gemeinsamer/ordner" />
+          <div className="button-row">
+            <Button type="submit">{t("save")}</Button>
+            <Button type="button" onClick={() => void pull()}>Pull</Button>
+          </div>
+          {syncStatus && <p className="sync-status">{syncStatus}</p>}
+          {syncError && <p className="form-error">{syncError}</p>}
+        </form>
+      ) : (
+        <div className="sync-form" style={{ marginTop: "2rem" }}>
+          <Button type="button" onClick={() => void useAppStore.getState().loadDemoData?.()}>Demo-Daten laden</Button>
         </div>
-        {syncStatus && <p className="sync-status">{syncStatus}</p>}
-        {syncError && <p className="form-error">{syncError}</p>}
-      </form>
+      )}
     </section>
   );
 }

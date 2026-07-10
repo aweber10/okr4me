@@ -50,6 +50,7 @@ interface AppState {
   deleteKeyResult: (keyResultId: string) => Promise<void>;
   toggleCrossLink: (objectiveId: string, keyResultId: string) => Promise<void>;
   addComment: (entityKind: EntityKind, entityId: string, text: string) => Promise<void>;
+  loadDemoData: () => Promise<void>;
 }
 
 function requireParticipant(state: AppState): string {
@@ -181,5 +182,38 @@ export const useAppStore = create<AppState>((set, get) => ({
   addComment: async (entityKind, entityId, text) => {
     const participantId = requireParticipant(get());
     await get().persist(addComment(get().document, participantId, entityKind, entityId, text));
+  },
+
+  loadDemoData: async () => {
+    const state = get();
+    const participantId = requireParticipant(state);
+    const { document } = state;
+    let nextDoc = { ...document };
+
+    // Create a demo OrgUnit
+    nextDoc = createOrgUnit(nextDoc, participantId, { name: "Demo Organisation", unitType: "company" });
+    const orgUnitId = Object.keys(nextDoc.orgUnits).find((id) => !document.orgUnits[id])!;
+    
+    // Create a demo Objective
+    nextDoc = createObjective(nextDoc, participantId, {
+      description: "Unsere App erfolgreich launchen",
+      type: "quarterly",
+      owner: { type: "orgUnit", id: orgUnitId },
+      ...state.selectedQuarter
+    });
+    const objectiveId = Object.keys(nextDoc.objectives).find((id) => !document.objectives[id])!;
+
+    // Create a demo Key Result
+    nextDoc = createKeyResult(nextDoc, participantId, objectiveId, {
+      description: "1000 aktive Nutzer erreichen",
+      startValue: 0,
+      targetValue: 1000,
+      currentValue: 150,
+      stepSize: 10,
+      weight: 1,
+      resultType: "number"
+    });
+
+    await state.persist(nextDoc);
   }
 }));

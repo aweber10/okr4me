@@ -6,7 +6,7 @@ const IDENTITY_KEY = "okr4me.identity";
 const DOCUMENT_KEY = "okr4me.document";
 const SYNC_CONFIG_KEY = "okr4me.syncConfig";
 
-function isTauri(): boolean {
+export function isTauri(): boolean {
   return "__TAURI_INTERNALS__" in window;
 }
 
