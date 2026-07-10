@@ -12,6 +12,7 @@ Lokaler OKR-Client auf Basis von React, Vite und Tauri 2.
 
 Rust installieren:
 
+**Linux / macOS:**
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
@@ -21,6 +22,12 @@ Nach der Installation ein neues Terminal oeffnen oder Cargo laden:
 ```bash
 . "$HOME/.cargo/env"
 ```
+
+**Windows:**
+```powershell
+winget install Rustlang.Rustup
+```
+Alternativ [rustup-init.exe](https://static.rust-lang.org/rustup/dist/x86_64-pc-windows-msvc/rustup-init.exe) herunterladen und ausführen.
 
 ## Projekt einrichten
 
