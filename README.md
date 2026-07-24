@@ -78,35 +78,44 @@ cargo check
 
 Der verlaesslichste Weg ist der Build direkt auf Windows. Cross-Compiling von macOS nach Windows ist bei Tauri moeglich, aber wegen WebView2, Windows-SDK und Toolchain deutlich aufwendiger und wird hier nicht als Standardweg verwendet.
 
-Auf einem Windows-Rechner:
+### Voraussetzungen (Windows)
 
-1. Node.js installieren.
-2. Rust installieren: https://rustup.rs/
-3. Microsoft Visual Studio Build Tools installieren.
+1. **Node.js** installieren: https://nodejs.org/
+2. **Rust** installieren:
+   ```powershell
+   winget install Rustlang.Rustup
+   ```
+   Alternativ [rustup-init.exe](https://static.rust-lang.org/rustup/dist/x86_64-pc-windows-msvc/rustup-init.exe) herunterladen und ausfuehren.
+3. **Microsoft Visual Studio Build Tools** installieren:
    - Workload: `Desktop development with C++`
    - Windows 10 oder Windows 11 SDK
-4. WebView2 Runtime installieren, falls sie nicht bereits vorhanden ist.
-5. Repository auschecken und Abhaengigkeiten installieren:
+4. **WebView2 Runtime** ist auf aktuellen Windows-10/11-Systemen bereits vorinstalliert. Falls nicht: https://developer.microsoft.com/en-us/microsoft-edge/webview2/
+
+### Build ausfuehren
+
+Repository auschecken, Abhaengigkeiten installieren und bauen:
 
 ```powershell
 npm install
-```
-
-6. Tests und Build ausfuehren:
-
-```powershell
-npm test
-npm run build
 npm run tauri build
 ```
 
-Die gebaute Anwendung liegt danach unter:
+### Ergebnis
+
+Nach erfolgreichem Build liegen die Installer unter:
 
 ```text
-src-tauri\target\release\
+src-tauri\target\release\bundle\nsis\okr4me_0.1.0_x64-setup.exe   # NSIS-Installer (empfohlen)
+src-tauri\target\release\bundle\msi\okr4me_0.1.0_x64_en-US.msi    # MSI-Installer
 ```
 
-Hinweis: In `src-tauri/tauri.conf.json` ist `bundle.active` aktuell auf `false` gesetzt. Damit wird primaer die Anwendung gebaut. Installer-/Bundle-Artefakte unter `src-tauri\target\release\bundle\` entstehen erst, wenn das Bundling in der Tauri-Konfiguration aktiviert wird.
+Die rohe `.exe` ohne Installer befindet sich unter:
+
+```text
+src-tauri\target\release\okr4me.exe
+```
+
+Der NSIS-Installer (`-setup.exe`) ist die empfohlene Variante zum Weitergeben: Er installiert die App fuer den aktuellen Nutzer ohne Administratorrechte.
 
 ## Nuetzliche Hinweise
 

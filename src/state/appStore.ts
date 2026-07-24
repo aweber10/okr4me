@@ -191,14 +191,14 @@ export const useAppStore = create<AppState>((set, get) => ({
     let nextDoc = { ...document };
 
     // Create a demo OrgUnit
-    nextDoc = createOrgUnit(nextDoc, participantId, { name: "Demo Organisation", unitType: "company" });
+    nextDoc = createOrgUnit(nextDoc, participantId, { name: "Demo Organisation", description: "", color: "#0078d4" });
     const orgUnitId = Object.keys(nextDoc.orgUnits).find((id) => !document.orgUnits[id])!;
     
     // Create a demo Objective
     nextDoc = createObjective(nextDoc, participantId, {
       description: "Unsere App erfolgreich launchen",
       type: "quarterly",
-      owner: { type: "orgUnit", id: orgUnitId },
+      owner: { kind: "orgUnit", id: orgUnitId },
       ...state.selectedQuarter
     });
     const objectiveId = Object.keys(nextDoc.objectives).find((id) => !document.objectives[id])!;
