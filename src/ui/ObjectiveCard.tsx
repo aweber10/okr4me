@@ -114,6 +114,8 @@ export function ObjectiveCard({ objective, readonly }: Props) {
   const [keyResultDraft, setKeyResultDraft] = useState("");
   const [editingMetricsId, setEditingMetricsId] = useState<string | null>(null);
   const [metricsDraft, setMetricsDraft] = useState<KeyResultFormState>(defaultKeyResultForm);
+  const [krLinkManagerId, setKrLinkManagerId] = useState<string | null>(null);
+  const [krLinkSearch, setKrLinkSearch] = useState("");
 
   function startObjectiveEdit() {
     setObjectiveDraft(currentObjective.description);
@@ -187,6 +189,22 @@ export function ObjectiveCard({ objective, readonly }: Props) {
     const parentObjective = document.objectives[keyResult.objectiveId];
     if (!parentObjective) return "";
     return `${parentObjective.description} · ${ownerLabel(document, parentObjective.owner)} · ${progressForValue(keyResult, keyResult.currentValue).toFixed(0)}%`;
+  }
+
+  function krLinkedObjectives(keyResult: KeyResult) {
+    return keyResult.crossLinkedObjectiveIds
+      .map((id) => document.objectives[id])
+      .filter((obj) => obj && !obj.deletedAt);
+  }
+
+  function krObjectiveCandidates(keyResult: KeyResult) {
+    const linkedIds = new Set(keyResult.crossLinkedObjectiveIds);
+    return activeObjectives(document, { quarter: currentObjective.quarter, year: currentObjective.year })
+      .filter((obj) => obj.id !== currentObjective.id && !linkedIds.has(obj.id));
+  }
+
+  function objectiveSummary(obj: Objective): string {
+    return `${ownerLabel(document, obj.owner)}`;
   }
 
   return (
@@ -273,7 +291,8 @@ export function ObjectiveCard({ objective, readonly }: Props) {
       )}
       <div className="kr-list">
         {keyResults.map((keyResult) => (
-          <div className={editingMetricsId === keyResult.id ? "kr-row editing" : "kr-row"} key={keyResult.id}>
+          <div key={keyResult.id}>
+          <div className={editingMetricsId === keyResult.id ? "kr-row editing" : "kr-row"}>
             <div className="kr-main">
               {editingKeyResultId === keyResult.id ? (
                 <form className="title-edit-form" onSubmit={(event) => { event.preventDefault(); void saveKeyResultDescription(keyResult.id, keyResult.description); }}>
@@ -344,10 +363,71 @@ export function ObjectiveCard({ objective, readonly }: Props) {
             />
             {!readonly && (
               <div className="kr-actions">
+                <Button
+                  aria-label={`Objective-Verknüpfungen für ${keyResult.description} verwalten`}
+                  icon={<Link2 size={16} />}
+                  appearance={krLinkManagerId === keyResult.id ? "primary" : "subtle"}
+                  onClick={() => {
+                    setKrLinkManagerId((current) => (current === keyResult.id ? null : keyResult.id));
+                    setKrLinkSearch("");
+                  }}
+                />
                 <Button aria-label={`Messwerte für ${keyResult.description} bearbeiten`} icon={<Pencil size={16} />} appearance="subtle" onClick={() => startMetricsEdit(keyResult)} />
                 <Button aria-label="Key Result löschen" icon={<Trash2 size={16} />} appearance="subtle" onClick={() => void deleteKeyResult(keyResult.id)} />
               </div>
             )}
+          </div>
+          {krLinkManagerId === keyResult.id && !readonly && (() => {
+            const linked = krLinkedObjectives(keyResult);
+            const candidates = krObjectiveCandidates(keyResult);
+            const normalizedKrSearch = krLinkSearch.trim().toLocaleLowerCase();
+            const filteredCandidates = normalizedKrSearch
+              ? candidates.filter((obj) => `${obj.description} ${ownerLabel(document, obj.owner)}`.toLocaleLowerCase().includes(normalizedKrSearch))
+              : candidates;
+            return (
+              <section className="cross-link-manager" aria-label="Objective-Verknüpfungen">
+                <div className="cross-link-column">
+                  <h4>Verknüpfte Objectives</h4>
+                  {linked.length === 0 && <p className="empty">Keine Querverlinkungen</p>}
+                  {linked.map((obj) => (
+                    <div className="cross-link-row" key={obj.id}>
+                      <div>
+                        <strong>{obj.description}</strong>
+                        <span>{objectiveSummary(obj)}</span>
+                      </div>
+                      <Button
+                        aria-label={`Querverlinkung zu ${obj.description} entfernen`}
+                        icon={<X size={16} />}
+                        appearance="subtle"
+                        onClick={() => void toggleCrossLink(obj.id, keyResult.id)}
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div className="cross-link-column">
+                  <h4>Objective verknüpfen</h4>
+                  <Input
+                    aria-label="Objectives suchen"
+                    value={krLinkSearch}
+                    onChange={(_, data) => setKrLinkSearch(data.value)}
+                    placeholder="Objective suchen"
+                  />
+                  {filteredCandidates.length === 0 && <p className="empty">Keine verknüpfbaren Objectives</p>}
+                  {filteredCandidates.map((obj) => (
+                    <button
+                      className="cross-link-candidate"
+                      type="button"
+                      key={obj.id}
+                      onClick={() => void toggleCrossLink(obj.id, keyResult.id)}
+                    >
+                      <strong>{obj.description}</strong>
+                      <span>{objectiveSummary(obj)}</span>
+                    </button>
+                  ))}
+                </div>
+              </section>
+            );
+          })()}
           </div>
         ))}
       </div>
