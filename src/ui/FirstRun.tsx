@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import { Button, Input, Label } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 import { useAppStore } from "../state/appStore";
+import { isTauri, selectSyncFolder } from "../platform/persistence";
 
 export function FirstRun() {
   const { t } = useTranslation();
@@ -11,7 +12,7 @@ export function FirstRun() {
   const [syncFolder, setSyncFolderDraft] = useState("");
   const [step, setStep] = useState<"identity" | "sync">("identity");
   const [error, setError] = useState("");
-  const isTauri = "__TAURI_INTERNALS__" in window;
+  const desktop = isTauri();
 
   async function submit(event: FormEvent) {
     event.preventDefault();
@@ -32,6 +33,16 @@ export function FirstRun() {
     }
   }
 
+  async function selectFolder() {
+    setError("");
+    try {
+      const selected = await selectSyncFolder(syncFolder.trim());
+      if (selected) setSyncFolderDraft(selected);
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : String(caught));
+    }
+  }
+
   return (
     <main className="center">
       <form className="setup-panel" onSubmit={(event) => void submit(event)}>
@@ -45,9 +56,12 @@ export function FirstRun() {
         ) : (
           <>
             <Label htmlFor="first-run-sync-folder">{t("syncFolder")}</Label>
-            <Input id="first-run-sync-folder" value={syncFolder} onChange={(_, data) => setSyncFolderDraft(data.value)} placeholder="/gemeinsamer/ordner" autoFocus />
+            <div className="folder-input-row">
+              <Input id="first-run-sync-folder" value={syncFolder} onChange={(_, data) => setSyncFolderDraft(data.value)} placeholder={t("syncFolderPlaceholder")} autoFocus />
+              {desktop && <Button type="button" onClick={() => void selectFolder()}>{t("selectFolder")}</Button>}
+            </div>
             <p className="subtle">
-              {isTauri ? t("syncSetupHintDesktop") : t("syncSetupHintBrowser")}
+              {desktop ? t("syncSetupHintDesktop") : t("syncSetupHintBrowser")}
             </p>
             {error && <p className="form-error">{error}</p>}
             <div className="button-row">

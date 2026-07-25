@@ -3,7 +3,7 @@ import { Button, Dropdown, Input, Label, Option, Textarea } from "@fluentui/reac
 import { useTranslation } from "react-i18next";
 import { useAppStore } from "../state/appStore";
 import type { OrgUnit } from "../domain/types";
-import { isTauri } from "../platform/persistence";
+import { isTauri, selectSyncFolder } from "../platform/persistence";
 
 function orgPath(units: OrgUnit[], unitId?: string): string {
   if (!unitId) return "";
@@ -64,6 +64,16 @@ export function ProfilePanel({ compact }: Props) {
     }
   }
 
+  async function selectFolder() {
+    setSyncError("");
+    try {
+      const selected = await selectSyncFolder(folder.trim());
+      if (selected) setFolder(selected);
+    } catch (error) {
+      setSyncError(error instanceof Error ? error.message : String(error));
+    }
+  }
+
   return (
     <section className="panel">
       {!compact && <h2>{t("profile")}</h2>}
@@ -92,7 +102,10 @@ export function ProfilePanel({ compact }: Props) {
       {isTauri() ? (
         <form className="sync-form" onSubmit={(event) => void submit(event)}>
           <Label htmlFor="profile-sync-folder">{t("syncFolder")}</Label>
-          <Input id="profile-sync-folder" value={folder} onChange={(_, data) => setFolder(data.value)} placeholder="/gemeinsamer/ordner" />
+          <div className="folder-input-row">
+            <Input id="profile-sync-folder" value={folder} onChange={(_, data) => setFolder(data.value)} placeholder={t("syncFolderPlaceholder")} />
+            <Button type="button" onClick={() => void selectFolder()}>{t("selectFolder")}</Button>
+          </div>
           <div className="button-row">
             <Button type="submit">{t("save")}</Button>
             <Button type="button" onClick={() => void pull()}>Pull</Button>

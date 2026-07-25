@@ -17,6 +17,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@fluentui/react-components": "^9.64.0",
     "@tauri-apps/api": "^2.0.0",
+    "@tauri-apps/plugin-dialog": "^2.7.2",
     "d3-force": "^3.0.0",
     "d3-selection": "^3.0.0",
     "d3-zoom": "^3.0.0",

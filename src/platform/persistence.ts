@@ -1,4 +1,5 @@
 import { invoke } from "@tauri-apps/api/core";
+import { open } from "@tauri-apps/plugin-dialog";
 import type { LocalIdentity, ZueDocument } from "../domain/types";
 import { emptyDocument, normalizeDocument } from "../domain/document";
 
@@ -67,6 +68,16 @@ export async function setSyncFolder(folderPath: string | null): Promise<void> {
   }
   if (folderPath) localStorage.setItem(SYNC_CONFIG_KEY, folderPath);
   else localStorage.removeItem(SYNC_CONFIG_KEY);
+}
+
+export async function selectSyncFolder(currentFolder?: string): Promise<string | null> {
+  if (!isTauri()) return null;
+  const selected = await open({
+    directory: true,
+    multiple: false,
+    defaultPath: currentFolder || undefined
+  });
+  return selected;
 }
 
 export async function syncPull(): Promise<ZueDocument[]> {

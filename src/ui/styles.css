@@ -167,6 +167,12 @@ body {
   gap: 8px;
 }
 
+.folder-input-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
 .notice {
   padding: 12px 14px;
   border-left: 4px solid #f7630c;
