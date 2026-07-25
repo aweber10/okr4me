@@ -18,6 +18,7 @@ import {
   updateParticipant
 } from "../domain/document";
 import { mergeDocuments } from "../domain/merge";
+import { normalizeDocument } from "../domain/document";
 import { getSyncFolder, loadDocument, loadIdentity, saveDocument, saveIdentity, setSyncFolder, syncPull, syncPush } from "../platform/persistence";
 
 interface AppState {
@@ -185,35 +186,10 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   loadDemoData: async () => {
-    const state = get();
-    const participantId = requireParticipant(state);
-    const { document } = state;
-    let nextDoc = { ...document };
-
-    // Create a demo OrgUnit
-    nextDoc = createOrgUnit(nextDoc, participantId, { name: "Demo Organisation", description: "", color: "#0078d4" });
-    const orgUnitId = Object.keys(nextDoc.orgUnits).find((id) => !document.orgUnits[id])!;
-    
-    // Create a demo Objective
-    nextDoc = createObjective(nextDoc, participantId, {
-      description: "Unsere App erfolgreich launchen",
-      type: "quarterly",
-      owner: { kind: "orgUnit", id: orgUnitId },
-      ...state.selectedQuarter
-    });
-    const objectiveId = Object.keys(nextDoc.objectives).find((id) => !document.objectives[id])!;
-
-    // Create a demo Key Result
-    nextDoc = createKeyResult(nextDoc, participantId, objectiveId, {
-      description: "1000 aktive Nutzer erreichen",
-      startValue: 0,
-      targetValue: 1000,
-      currentValue: 150,
-      stepSize: 10,
-      weight: 1,
-      resultType: "number"
-    });
-
-    await state.persist(nextDoc);
+    const response = await fetch("/demo/complex-graph-demo.json");
+    if (!response.ok) throw new Error(`Demo-Daten konnten nicht geladen werden: ${response.status}`);
+    const raw = await response.json();
+    const demoDoc = normalizeDocument(raw);
+    await get().persist(demoDoc);
   }
 }));

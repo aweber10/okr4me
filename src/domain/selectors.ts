@@ -46,7 +46,11 @@ export function objectivesForOrgUnit(document: ZueDocument, orgUnitId: string, s
 }
 
 export function graphForQuarter(document: ZueDocument, selected: Quarter): { nodes: GraphNode[]; links: GraphLink[] } {
-  const objectives = activeObjectives(document, selected);
+  const objectives = activeObjectives(document, selected).filter((objective) => {
+    if (objective.owner.kind !== "orgUnit") return true;
+    const unit = document.orgUnits[objective.owner.id];
+    return unit && !unit.deletedAt;
+  });
   const nodes: GraphNode[] = [];
   const links: GraphLink[] = [];
   const objectiveIds = new Set(objectives.map((objective) => objective.id));
