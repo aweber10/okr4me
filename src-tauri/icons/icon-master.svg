@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#39a9ff"/>
+      <stop offset="0.48" stop-color="#087bd5"/>
+      <stop offset="1" stop-color="#0054a6"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="0.4" stop-color="#ffffff" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#003d7d" stop-opacity="0.35"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="22" stdDeviation="20" flood-color="#001a35" flood-opacity="0.3"/>
+    </filter>
+    <filter id="glyph-shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="7" stdDeviation="5" flood-color="#003f7f" flood-opacity="0.38"/>
+    </filter>
+    <clipPath id="squircle">
+      <path d="M294 108H730C773 108 815 108 848 122C879 135 889 145 902 176C916 209 916 251 916 294V730C916 773 916 815 902 848C889 879 879 889 848 902C815 916 773 916 730 916H294C251 916 209 916 176 902C145 889 135 879 122 848C108 815 108 773 108 730V294C108 251 108 209 122 176C135 145 145 135 176 122C209 108 251 108 294 108Z"/>
+    </clipPath>
+  </defs>
+
+  <g filter="url(#shadow)">
+    <path fill="url(#tile)" d="M294 108H730C773 108 815 108 848 122C879 135 889 145 902 176C916 209 916 251 916 294V730C916 773 916 815 902 848C889 879 879 889 848 902C815 916 773 916 730 916H294C251 916 209 916 176 902C145 889 135 879 122 848C108 815 108 773 108 730V294C108 251 108 209 122 176C135 145 145 135 176 122C209 108 251 108 294 108Z"/>
+    <path fill="none" stroke="url(#edge)" stroke-width="10" d="M296 113H728C770 113 811 113 843 126C873 139 883 149 895 179C908 211 908 252 908 294V728C908 770 908 811 895 843C883 873 873 883 843 895C811 908 770 908 728 908H296C254 908 213 908 181 895C151 883 141 873 129 843C116 811 116 770 116 728V296C116 254 116 213 129 181C141 151 151 141 181 129C213 116 254 116 296 116Z"/>
+    <g clip-path="url(#squircle)">
+      <ellipse cx="390" cy="175" rx="350" ry="170" fill="#ffffff" opacity="0.1"/>
+      <path d="M150 760C350 865 682 890 905 743V930H104Z" fill="#003d7d" opacity="0.1"/>
+    </g>
+  </g>
+
+  <g fill="none" stroke="#ffffff" stroke-width="58" stroke-linecap="round" filter="url(#glyph-shadow)">
+    <circle cx="443" cy="574" r="266"/>
+    <circle cx="443" cy="574" r="154"/>
+    <circle cx="443" cy="574" r="48"/>
+    <path d="M443 574L716 301"/>
+  </g>
+  <path fill="#ffffff" filter="url(#glyph-shadow)" d="M690 232L795 127L808 238L919 251L814 356L719 347Z"/>
+  <path fill="none" stroke="#ffffff" stroke-linecap="round" stroke-width="34" d="M443 574L716 301"/>
+</svg>
