@@ -89,11 +89,30 @@ export function RelationGraph() {
   const [positionedNodes, setPositionedNodes] = useState<PositionedNode[]>([]);
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [transform, setTransform] = useState({ x: 0, y: 0, k: 1 });
-  const [draggedNodeId, setDraggedNodeId] = useState<string | null>(null);
+  const [drag, setDrag] = useState<{
+    pointerId: number;
+    primaryId: string;
+    lastX: number;
+    lastY: number;
+    memberIds: string[];
+  } | null>(null);
   const [panStart, setPanStart] = useState<{ pointerId: number; x: number; y: number; originX: number; originY: number } | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   const graphKey = useMemo(() => `${graph.nodes.map((node) => node.id).join("|")}::${graph.links.map((link) => `${link.source}-${link.target}-${link.kind}`).join("|")}`, [graph]);
+
+  // Direkte Key Results je Objective (nur parent-Kanten), fuer die lokale
+  // Gruppenbewegung beim Ziehen eines Objectives.
+  const keyResultsByObjective = useMemo(() => {
+    const map = new Map<string, string[]>();
+    for (const link of graph.links) {
+      if (link.kind !== "parent") continue;
+      const list = map.get(link.source) ?? [];
+      list.push(link.target);
+      map.set(link.source, list);
+    }
+    return map;
+  }, [graph.links]);
 
   useEffect(() => {
     const crossLinkCounts = new Map<string, number>();
@@ -102,29 +121,72 @@ export function RelationGraph() {
       crossLinkCounts.set(link.target, (crossLinkCounts.get(link.target) ?? 0) + 1);
     }
 
-    const nodes: PositionedNode[] = graph.nodes.map((node, index) => {
-      const angle = (index / Math.max(1, graph.nodes.length)) * Math.PI * 2;
+    // Ordne jeden Key Result seinem Eltern-Objective zu (parent-Kante),
+    // damit KRs gezielt an ihrem eigenen Objective clustern koennen.
+    const parentByKeyResult = new Map<string, string>();
+    for (const link of graph.links.filter((item) => item.kind === "parent")) {
+      parentByKeyResult.set(link.target, link.source);
+    }
+
+    // Verteile die Objectives auf einem Ring; Key Results starten dicht bei
+    // ihrem Objective, damit die Simulation nicht in Layouts faellt, in denen
+    // KRs zwischen fremden Objectives haengenbleiben.
+    const objectiveNodes = graph.nodes.filter((node) => node.kind === "objective");
+    const objectiveAngle = new Map<string, number>();
+    objectiveNodes.forEach((node, index) => {
+      objectiveAngle.set(node.id, (index / Math.max(1, objectiveNodes.length)) * Math.PI * 2);
+    });
+
+    const nodes: PositionedNode[] = graph.nodes.map((node) => {
       const radius = node.kind === "objective" ? 34 + Math.min(10, (crossLinkCounts.get(node.id) ?? 0) * 3) : 12;
+      let angle: number;
+      let ring: number;
+      if (node.kind === "objective") {
+        angle = objectiveAngle.get(node.id) ?? 0;
+        ring = 210;
+      } else {
+        const parentId = parentByKeyResult.get(node.id);
+        angle = (parentId ? objectiveAngle.get(parentId) : undefined) ?? Math.random() * Math.PI * 2;
+        // leichter Winkelversatz, damit mehrere KRs eines Objectives nicht exakt uebereinander starten
+        angle += (Math.random() - 0.5) * 0.4;
+        ring = 210 + 46;
+      }
       return {
         ...node,
         radius,
         shortLabel: shortLabel(node.label),
         crossLinkCount: crossLinkCounts.get(node.id) ?? 0,
-        x: WIDTH / 2 + Math.cos(angle) * 180,
-        y: HEIGHT / 2 + Math.sin(angle) * 180
+        x: WIDTH / 2 + Math.cos(angle) * ring,
+        y: HEIGHT / 2 + Math.sin(angle) * ring
       };
     });
 
+    const nodeIndexById = new Map(nodes.map((node) => [node.id, node]));
+
+    // Zielposition eines Key Results = aktuelle Position seines Objectives.
+    // Ueber forceX/forceY zieht es KRs bevorzugt zu ihrem eigenen Objective.
+    // Objectives selbst werden nur locker zur Mitte gezogen.
+    function clusterTarget(node: PositionedNode, axis: "x" | "y"): number {
+      const center = (axis === "x" ? WIDTH : HEIGHT) / 2;
+      if (node.kind !== "keyResult") return center;
+      const parentId = parentByKeyResult.get(node.id);
+      const parent = parentId ? nodeIndexById.get(parentId) : undefined;
+      if (!parent) return center;
+      return (axis === "x" ? parent.x : parent.y) ?? center;
+    }
+
     const simulationLinks = graph.links.map((link) => ({ ...link }));
     forceSimulation(nodes)
-      .force("link", forceLink<PositionedNode, GraphLink>(simulationLinks).id((node) => node.id).distance((link) => link.kind === "crossLink" ? 110 : 58).strength((link) => link.kind === "crossLink" ? 0.55 : 0.22))
-      .force("charge", forceManyBody<PositionedNode>().strength((node) => node.kind === "objective" ? -440 : -90))
-      .force("collide", forceCollide<PositionedNode>().radius((node) => node.radius + 10).strength(0.95))
-      .force("x", forceX<PositionedNode>(WIDTH / 2).strength(0.035))
-      .force("y", forceY<PositionedNode>(HEIGHT / 2).strength(0.035))
+      .force("link", forceLink<PositionedNode, GraphLink>(simulationLinks).id((node) => node.id).distance((link) => link.kind === "crossLink" ? 150 : 46).strength((link) => link.kind === "crossLink" ? 0.25 : 0.9))
+      .force("charge", forceManyBody<PositionedNode>().strength((node) => node.kind === "objective" ? -520 : -150))
+      .force("collide", forceCollide<PositionedNode>().radius((node) => node.radius + 14).strength(1))
+      // Cluster-Bindung: KRs werden zu ihrem eigenen Objective gezogen,
+      // Objectives bleiben locker zentriert.
+      .force("x", forceX<PositionedNode>((node) => clusterTarget(node, "x")).strength((node) => node.kind === "keyResult" ? 0.35 : 0.04))
+      .force("y", forceY<PositionedNode>((node) => clusterTarget(node, "y")).strength((node) => node.kind === "keyResult" ? 0.35 : 0.04))
       .force("center", forceCenter(WIDTH / 2, HEIGHT / 2))
       .stop()
-      .tick(260);
+      .tick(420);
 
     setPositionedNodes(nodes.map((node) => ({
       ...node,
@@ -142,7 +204,10 @@ export function RelationGraph() {
       if (!source || !target) return null;
       return { ...link, sourceNode: source, targetNode: target };
     })
-    .filter((link): link is DrawableLink => link !== null), [graph.links, nodeById]);
+    .filter((link): link is DrawableLink => link !== null)
+    // Parent-Links zuerst, Cross-Links darueber zeichnen, damit die
+    // auffaelligen Beziehungslinien nicht von Struktur-Kanten verdeckt werden.
+    .sort((a, b) => (a.kind === "crossLink" ? 1 : 0) - (b.kind === "crossLink" ? 1 : 0)), [graph.links, nodeById]);
   const selectedNode = selectedNodeId ? nodeById.get(selectedNodeId) : undefined;
   const selectedLinks = selectedNode ? drawableLinks.filter((link) => link.source === selectedNode.id || link.target === selectedNode.id) : [];
   const owners = useMemo(() => {
@@ -197,9 +262,27 @@ export function RelationGraph() {
               event.currentTarget.setPointerCapture(event.pointerId);
             }}
             onPointerMove={(event) => {
-              if (draggedNodeId) {
+              if (drag?.pointerId === event.pointerId) {
                 const point = svgPoint(event);
-                setPositionedNodes((nodes) => nodes.map((node) => node.id === draggedNodeId ? { ...node, x: clamp(point.x, 36, WIDTH - 36), y: clamp(point.y, 36, HEIGHT - 36) } : node));
+                if (Number.isNaN(point.x) || Number.isNaN(point.y)) return;
+                setPositionedNodes((nodes) => {
+                  const members = new Set(drag.memberIds);
+                  // Rohes Delta seit dem letzten Move.
+                  let dx = point.x - drag.lastX;
+                  let dy = point.y - drag.lastY;
+                  // Delta so begrenzen, dass die gesamte Gruppe im Zeichenbereich bleibt.
+                  for (const node of nodes) {
+                    if (!members.has(node.id)) continue;
+                    const nx = node.x ?? WIDTH / 2;
+                    const ny = node.y ?? HEIGHT / 2;
+                    dx = clamp(dx, 36 - nx, WIDTH - 36 - nx);
+                    dy = clamp(dy, 36 - ny, HEIGHT - 36 - ny);
+                  }
+                  return nodes.map((node) => members.has(node.id)
+                    ? { ...node, x: (node.x ?? WIDTH / 2) + dx, y: (node.y ?? HEIGHT / 2) + dy }
+                    : node);
+                });
+                setDrag((current) => current ? { ...current, lastX: point.x, lastY: point.y } : current);
                 return;
               }
               if (panStart?.pointerId === event.pointerId) {
@@ -214,39 +297,49 @@ export function RelationGraph() {
               }
             }}
             onPointerUp={(event) => {
-              setDraggedNodeId(null);
+              if (drag?.pointerId === event.pointerId) setDrag(null);
               if (panStart?.pointerId === event.pointerId) setPanStart(null);
             }}
             onPointerCancel={() => {
-              setDraggedNodeId(null);
+              setDrag(null);
               setPanStart(null);
             }}
           >
             <defs>
-              <marker id="cluster-arrow-cross" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
-                <path d="M0,0 L8,4 L0,8 Z" />
+              <marker id="cluster-arrow-cross" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+                <path d="M0,0 L7,3.5 L0,7 Z" />
               </marker>
             </defs>
             <g transform={`translate(${transform.x} ${transform.y}) scale(${transform.k})`}>
-              {drawableLinks.map((link, index) => (
-                <line
-                  key={`${link.source}-${link.target}-${index}`}
-                  className={`graph-link ${link.kind}`}
-                  x1={link.sourceNode.x}
-                  y1={link.sourceNode.y}
-                  x2={link.targetNode.x}
-                  y2={link.targetNode.y}
-                  markerEnd={link.kind === "crossLink" ? "url(#cluster-arrow-cross)" : undefined}
-                />
-              ))}
+              {drawableLinks.map((link, index) => {
+                const connectedToSelection = selectedNodeId != null && (link.source === selectedNodeId || link.target === selectedNodeId);
+                return (
+                  <line
+                    key={`${link.source}-${link.target}-${index}`}
+                    className={`graph-link ${link.kind}${connectedToSelection ? " highlighted" : ""}`}
+                    x1={link.sourceNode.x}
+                    y1={link.sourceNode.y}
+                    x2={link.targetNode.x}
+                    y2={link.targetNode.y}
+                    markerEnd={link.kind === "crossLink" ? "url(#cluster-arrow-cross)" : undefined}
+                  />
+                );
+              })}
               {positionedNodes.map((node) => (
                 <g
                   key={node.id}
+                  data-node-id={node.id}
                   className={`cluster-node ${node.kind} ${selectedNodeId === node.id ? "selected" : ""}`}
                   transform={`translate(${node.x} ${node.y})`}
                   onPointerDown={(event) => {
                     event.stopPropagation();
-                    setDraggedNodeId(node.id);
+                    // Objective zieht seine direkten KRs als starre Gruppe mit;
+                    // ein KR bewegt sich einzeln. Fremde Cluster bleiben stehen.
+                    const memberIds = node.kind === "objective"
+                      ? [node.id, ...(keyResultsByObjective.get(node.id) ?? [])]
+                      : [node.id];
+                    const point = svgPoint(event);
+                    setDrag({ pointerId: event.pointerId, primaryId: node.id, lastX: point.x, lastY: point.y, memberIds });
                     setSelectedNodeId(node.id);
                     event.currentTarget.setPointerCapture(event.pointerId);
                   }}

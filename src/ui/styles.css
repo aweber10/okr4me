@@ -592,21 +592,39 @@ p {
 }
 
 .graph-link {
-  stroke: #8b949f;
-  stroke-width: 1.1;
-  stroke-opacity: 0.32;
   vector-effect: non-scaling-stroke;
 }
 
+/* Parent-Zuordnung ist die primaere Struktur: kraeftig, durchgezogen, dunkel. */
+.graph-link.parent {
+  stroke: #5d6673;
+  stroke-width: 2;
+  stroke-opacity: 0.55;
+}
+
+.graph-link.parent.highlighted {
+  stroke: #242424;
+  stroke-width: 2.6;
+  stroke-opacity: 0.85;
+}
+
+/* Cross-Links sind sekundaer: dezent, duenn, gestrichelt, zurueckhaltend. */
 .graph-link.crossLink {
-  stroke: #8a5a00;
-  stroke-width: 2.2;
-  stroke-opacity: 0.72;
-  stroke-dasharray: 6 4;
+  stroke: #c98a4b;
+  stroke-width: 1.4;
+  stroke-opacity: 0.42;
+  stroke-dasharray: 5 5;
+  stroke-linecap: round;
+}
+
+.graph-link.crossLink.highlighted {
+  stroke: #d1600a;
+  stroke-width: 2.4;
+  stroke-opacity: 0.9;
 }
 
 #cluster-arrow-cross {
-  fill: #8a5a00;
+  fill: #c98a4b;
 }
 
 .cluster-node {
@@ -620,7 +638,7 @@ p {
 }
 
 .cluster-node.keyResult circle {
-  opacity: 0.62;
+  opacity: 0.78;
   stroke-width: 2;
 }
 
